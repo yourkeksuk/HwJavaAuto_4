@@ -7,8 +7,7 @@ import java.time.format.DateTimeFormatter;
 
 import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 public class FormTest {
 
@@ -26,7 +25,7 @@ public class FormTest {
         $("[data-test-id=name] input").setValue("Пупкин Василий");
         $("[data-test-id=phone] input").setValue("+79999999999");
         $("[data-test-id=agreement]").click();
-        $("[class=button__content]").click();
+        $$("button").find(exactText("Забронировать")).click();
         $("[data-test-id=notification]").shouldHave(exactText("Успешно! " + "Встреча успешно забронирована на " + date), Duration.ofSeconds(15)).shouldBe(exist);
     }
 }
