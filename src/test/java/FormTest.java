@@ -1,3 +1,5 @@
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
@@ -15,10 +17,20 @@ public class FormTest {
         return LocalDate.now().plusDays(date).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
     }
 
+    @BeforeEach
+    void setUp() {
+        open("http://localhost:9999/");
+    }
+
+    @AfterEach
+    void tearDown() {
+        clearBrowserCookies();
+        closeWebDriver();
+    }
+
     @Test
     void formTest() {
         String date = generateDate(3);
-        open("http://localhost:9999/");
         $("[data-test-id=city] input").setValue("Казань");
         $("[data-test-id=date] input").sendKeys(Keys.chord(Keys.CONTROL, Keys.HOME), Keys.BACK_SPACE);
         $("[data-test-id=date] input").setValue(date);
